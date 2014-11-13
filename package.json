@@ -1,0 +1,7 @@
+{
+  "name": "french-spelling",
+  "version": "0.0.0",
+  "devDependencies": {
+    "split": "^0.3.1"
+  }
+}
