@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 
 <title>French Spellings</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -17,134 +20,153 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js" ></script>
 
 <style>
+
+body {
+    padding-top: 50px;
+}
 .main {
-	padding: 60px 15px;
-	text-align: center;
+    padding: 40px 15px;
+    text-align: center;
 }
 
 #buttons {
-	color:#fff;
+    color:#fff;
+}
+
+#fr-word {
+    color: #666;
 }
 
 </style>
 
 <script>
 
-	var data;
-	var done = -1;
-	var correct = 0;
-	var timer;
+var data;
+var done = -1;
+var correct = 0;
+var timer;
 
-	function start() {
-		$('#start').hide();
-		$('#test').show();
-		var totalTime = 60;
-		var counter = totalTime;
-		function tick() {
-			$('#countdown').html(counter);
-			timer = window.setTimeout(next, 1000)
-		}
-		function next() {	
-			counter--;
-			if (counter == 0) {
-				$('#test').html('Finished.  ' + done + ' words completed, ' + correct + ' correct."' );
-			} 
-			else {
-				if (counter < 5) {
-					$('#countdown-label').removeClass('alert-warning').addClass('alert-danger');
-				} else if (counter < 10) {
-					$('#countdown-label').removeClass('alert-info').addClass('alert-warning');
-				}
-				tick();	
-			}
-		}
-		tick();
-		nextWord();
-		
-	}
+function start() {
+    $('#start').hide();
+    $('#test').show();
+    var totalTime = 60;
+    var counter = totalTime;
+    function tick() {
+        $('#countdown').html(counter);
+        timer = window.setTimeout(next, 1000)
+    }
+    function next() {
+        counter--;
+        if (counter == 0) {
+            $('#test').html('Finished.  ' + done + ' words completed, ' + correct + ' correct.' );
+        }
+        else {
+            if (counter < 5) {
+                $('#countdown-label').removeClass('alert-warning').addClass('alert-danger');
+            } else if (counter < 10) {
+                $('#countdown-label').removeClass('alert-info').addClass('alert-warning');
+            }
+            tick();
+        }
+    }
+    tick();
+    nextWord();
 
-	function pass() {
-		correct++;
-		nextWord();
-	}
+}
 
-	function nextWord() {
-		if(data.length == 0) {
-			clearTimeout(timer);
-			$('#spell').text('Well done, you finished the list.');
-			$('#buttons').remove();
-		} else {
-			var w = data.pop();
-			$('#eng-word').text(w[0]);
-			$('#fr-word').text(w[1]);
-		}
-		done++;
-		$('#completed').text(done);
-		$('#correct').text(correct);
-	}
+function pass() {
+    correct++;
+    nextWord();
+}
 
-	function fail() {
-		nextWord();
-	}
-	$(function() {
-		$('#test').hide();
-		$.getJSON('data.json', null, function(d) {
-			data = _(d).shuffle();
-			$('#start').click(start);		
-			$('#pass').click(pass);
-			$('#fail').click(fail);
-		});	
-	});
+function nextWord() {
+    if(data.length == 0) {
+        clearTimeout(timer);
+        $('#spell').text('Well done, you finished the list.');
+        $('#buttons').remove();
+    } else {
+        var w = data.pop();
+        $('#eng-word').text(w[0]);
+        $('#fr-word').text(w[1]);
+    }
+    done++;
+    $('#completed').text(done);
+    $('#correct').text(correct);
+}
+
+function fail() {
+    nextWord();
+}
+$(function() {
+        $('#test').hide();
+        $.getJSON('data.json', null, function(d) {
+            data = _(d).shuffle();
+            $('#start').click(start);
+            $('#pass').click(pass);
+            $('#fail').click(fail);
+            });
+        });
 </script>
 </head>
-	<body>
+<body>
 
- <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="navbar-brand">Feench Spelling Revision</span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">French Spelling Revision</span>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#about">About</a></li>
-          </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="#about">About</a></li>
+            </ul>
         </div><!--/.nav-collapse -->
-      </div>
     </div>
+</div>
+<div class="main">
+    <div class="container-fluid">
+        <button id="start" type="button" class="btn btn-lg btn-primary">Start</button>
 
-    <div class="container">
-	     <div class="main">
-	     	<button id="start" type="button" class="btn btn-lg btn-primary">Start</button>
-			<div id="test">
-				<h1>
-				<div id="spell" class="row">
-					<h1><div id="eng-word" class="col-md-4 col-md-offset-2"></div></h1>
-					<h1><div id="fr-word" class="col-md-4" ></div></h1>
-				</div>
-			</h1>
-				<div class="row" style="margin-top:10em">
-						<span id="countdown-label" class="alert alert-info">Countdown: <span class "badge" id="countdown"></span>s</span>
+        <div id="test">
+            <div class="row">
+                <div id="countdown-label" class="alert alert-info">Countdown: <span class "badge" id="countdown"></span>s</div>
+            </div>
 
-						<span class="alert alert-info"><span id="completed"></span>  words completed, <span id="correct"></span> correct.</span>
-				</div>
+            <div class="row">
+                <div >
+                    <span id="completed" class="badge alert-info"></span>  words completed,
+                    <span id="correct" class="badge alert-success"></span> correct.
+                </div>
+            </div>
 
-				<div id="buttons" class="row">
-					<div class="col-md-6">
-						<button id="pass" type="button" class="btn btn-lg btn-success">&#10004;</button>
-					</div>
-					<div class="col-md-6">
-						<button type="button" id="fail" class="btn btn-lg btn-danger">&#10008;</button>
-					</div>
-				</div>
-				
-			</div>
-		</div>	
-	</div>
-	</body>
+            <h1>
+                <div id="spell" >
+                    <div class="pull-left"><h1 id="eng-word"></h1></div>
+                    <div class="pull-right"><h1 id="fr-word"></h1></div>
+
+                </div>
+            </h1>
+
+            <div class="row">
+                <div id="buttons" class="btn-group  btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group btn-group-lg" role="group">
+                        <button id="pass" type="button" class="btn btn-success">&#10004;</button>
+                    </div>
+                    <div class="btn-group btn-group-lg" role="group">
+                        <button type="button" id="fail" class="btn btn-danger">&#10008;</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+</body>
 </html>
