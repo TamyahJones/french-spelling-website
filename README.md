@@ -1,1 +1,1 @@
-http://peterhancock.github.io/french-spelling-website/
+http://tamyahjones.github.io/french-spelling-website/
