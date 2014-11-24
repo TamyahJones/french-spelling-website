@@ -14,6 +14,7 @@
 	    $('#test').show();
 		$('#pass').click(this._pass.bind(this));
         $('#fail').click(this._fail.bind(this));
+        $('#countdown-label').removeClass().addClass('alert').addClass('alert-info');
 
         var scope = this;
 	    
@@ -31,9 +32,9 @@
 	        	scope._finish();	            
 	        }
 	        else {
-	            if (counter < 5) {
+	            if (counter < 10) {
 	                $('#countdown-label').removeClass('alert-warning').addClass('alert-danger');
-	            } else if (counter < 10) {
+	            } else if (counter < 20) {
 	                $('#countdown-label').removeClass('alert-info').addClass('alert-warning');
 	            }
 	            tick();
